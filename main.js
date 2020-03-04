@@ -4,10 +4,15 @@ const sqlite3 = require('sqlite3')
 const bodyParser = require('body-parser')
 const app = express();
 
-
+app.set('view engine','ejs')
 app.use(bodyParser.json())
 app.use(route)
-
+app.get('/home',function(req,res){
+    res.sendFile(__dirname+'/testhtml.html')
+})
+app.get('/ejs',function(req,res){
+    res.render('testejs')
+})
 //connecting to sqlite
 // let db = new sqlite3.Database('./database/main.db', function(err){
 //   if (err) {
