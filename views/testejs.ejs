@@ -12,20 +12,150 @@
   </head>
   <body>
     <h1>Electron Application</h1>
-
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-
     
-    <div class="container-sm">100% wide until small breakpoint</div>
-<div class="container-md">100% wide until medium breakpoint</div>
-<div class="container-lg">100% wide until large breakpoint</div>
-<div class="container-xl">100% wide until extra large breakpoint</div>
+    <div class="container">
+        <div class="row">
+          <div class="col-sm-6">
+            <h2>List Products</h2>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <table id="productTable"
+                    class="table table-bordered
+                           table-condensed table-striped">
+              <thead>
+                <tr>
+                  <th>Product Name</th>
+                  <th>Introduction Date</th>
+                  <th>URL</th>
+                </tr>
+              </thead>
+            </table>
+          </div>
+        </div>
+      </div>
 
 
-  </body>
+      <script>
+        // Add products to <table>
+        function productsAdd() {
+          // First check if a <tbody> tag exists, add one if not
+          if ($("#productTable tbody").length == 0) {
+            $("#productTable").append("<tbody></tbody>");
+          }
+            
+          // Append product to the table
+          $("#productTable tbody").append(
+            "<tr>" +
+              "<td>Extending Bootstrap with CSS,
+                   JavaScript and jQuery</td>" +
+              "<td>6/11/2015</td>" +
+              "<td>http://bit.ly/1SNzc0i</td>" +
+            "</tr>"
+            );
+          $("#productTable tbody").append(
+            "<tr>" +
+              "<td>Build your own Bootstrap Business
+                   Application Template in MVC</td>" +
+              "<td>1/29/2015</td>" +
+              "<td>http://bit.ly/1I8ZqZg</td>" +
+            "</tr>"
+            );
+        }
+
+        function productAddToTable() {
+  // First check if a <tbody> tag exists, add one if not
+  if ($("#productTable tbody").length == 0) {
+    $("#productTable").append("<tbody></tbody>");
+  }
+      
+  // Append product to the table
+  $("#productTable tbody").append(
+      "<tr>" +
+        "<td>" + $("#productname").val() + "</td>" +
+        "<td>" + $("#introdate").val() + "</td>" +
+        "<td>" + $("#url").val() + "</td>" +
+      "</tr>"
+      );
+}
+
+function productAddToTable() {
+  // First check if a <tbody> tag exists, add one if not
+  if ($("#productTable tbody").length == 0) {
+    $("#productTable").append("<tbody></tbody>");
+  }
+      
+  // Append product to the table
+  $("#productTable tbody").append(
+    "<tr>" +
+      "<td>" + $("#productname").val() + "</td>" +
+      "<td>" + $("#introdate").val() + "</td>" +
+      "<td>" + $("#url").val() + "</td>" +
+      "<td>" +
+        "<button type='button' " +
+                "onclick='productDelete(this);' " +
+                "class='btn btn-default'>" +
+                "<span class='glyphicon
+                              glyphicon-remove' />" +
+        "</button>" +
+      "</td>" +
+    "</tr>"
+  );
+}
+function productBuildTableRow() {
+  var ret =
+  "<tr>" +
+    "<td>" +
+      "<button type='button' " +
+              "onclick='productDisplay(this);' " +
+              "class='btn btn-default'>" +
+              "<span class='glyphicon glyphicon-edit' />" +
+      "</button>" +
+    "</td>" +
+    "<td>" + $("#productname").val() + "</td>" +
+    "<td>" + $("#introdate").val() + "</td>" +
+    "<td>" + $("#url").val() + "</td>" +
+    "<td>" +
+      "<button type='button' " +
+              "onclick='productDelete(this);' " +
+              "class='btn btn-default'>" +
+              "<span class='glyphicon glyphicon-remove' />" +
+      "</button>" +
+    "</td>" +
+  "</tr>"
+      
+  return ret;
+}
+function productBuildTableRow(id) {
+  var ret =
+  "<tr>" +
+    "<td>" +
+      "<button type='button' " +
+              "onclick='productDisplay(this);' " +
+              "class='btn btn-default' " +
+              "data-id='" + id + "'>" +
+              "<span class='glyphicon glyphicon-edit' />" +
+      "</button>" +
+    "</td>" +
+    "<td>" + $("#productname").val() + "</td>" +
+    "<td>" + $("#introdate").val() + "</td>" +
+    "<td>" + $("#url").val() + "</td>" +
+    "<td>" +
+      "<button type='button' " +
+              "onclick='productDelete(this);' " +
+              "class='btn btn-default' " +
+              "data-id='" + id + "'>" +
+              "<span class='glyphicon glyphicon-remove' />" +
+      "</button>" +
+    "</td>" +
+  "</tr>"
+      
+  return ret;
+}
+
+      </script>
+
+    </body>
 
 </html>
