@@ -12,150 +12,189 @@
   </head>
   <body>
     <h1>Electron Application</h1>
-    
-    <div class="container">
-        <div class="row">
-          <div class="col-sm-6">
-            <h2>List Products</h2>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-sm-6">
-            <table id="productTable"
-                    class="table table-bordered
-                           table-condensed table-striped">
-              <thead>
-                <tr>
-                  <th>Product Name</th>
-                  <th>Introduction Date</th>
-                  <th>URL</th>
-                </tr>
-              </thead>
-            </table>
-          </div>
-        </div>
-      </div>
 
-
+    <table class="table table-bordered table-responsive-md table-striped text-center">
+        <thead>
+          <tr>
+            <th class="text-center">Person Name</th>
+            <th class="text-center">Age</th>
+            <th class="text-center">Company Name</th>
+            <th class="text-center">Country</th>
+            <th class="text-center">City</th>
+            <th class="text-center">Sort</th>
+            <th class="text-center">Remove</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="pt-3-half" contenteditable="true">Aurelia Vega</td>
+            <td class="pt-3-half" contenteditable="true">30</td>
+            <td class="pt-3-half" contenteditable="true">Deepends</td>
+            <td class="pt-3-half" contenteditable="true">Spain</td>
+            <td class="pt-3-half" contenteditable="true">Madrid</td>
+            <td class="pt-3-half">
+              <span class="table-up"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-up"
+                    aria-hidden="true"></i></a></span>
+              <span class="table-down"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-down"
+                    aria-hidden="true"></i></a></span>
+            </td>
+            <td>
+              <span class="table-remove"><button type="button"
+                  class="btn btn-danger btn-rounded btn-sm my-0">Remove</button></span>
+            </td>
+          </tr>
+          <!-- This is our clonable table line -->
+          <tr>
+            <td class="pt-3-half" contenteditable="true">Guerra Cortez</td>
+            <td class="pt-3-half" contenteditable="true">45</td>
+            <td class="pt-3-half" contenteditable="true">Insectus</td>
+            <td class="pt-3-half" contenteditable="true">USA</td>
+            <td class="pt-3-half" contenteditable="true">San Francisco</td>
+            <td class="pt-3-half">
+              <span class="table-up"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-up"
+                    aria-hidden="true"></i></a></span>
+              <span class="table-down"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-down"
+                    aria-hidden="true"></i></a></span>
+            </td>
+            <td>
+              <span class="table-remove"><button type="button"
+                  class="btn btn-danger btn-rounded btn-sm my-0">Remove</button></span>
+            </td>
+          </tr>
+          <!-- This is our clonable table line -->
+          <tr>
+            <td class="pt-3-half" contenteditable="true">Guadalupe House</td>
+            <td class="pt-3-half" contenteditable="true">26</td>
+            <td class="pt-3-half" contenteditable="true">Isotronic</td>
+            <td class="pt-3-half" contenteditable="true">Germany</td>
+            <td class="pt-3-half" contenteditable="true">Frankfurt am Main</td>
+            <td class="pt-3-half">
+              <span class="table-up"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-up"
+                    aria-hidden="true"></i></a></span>
+              <span class="table-down"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-down"
+                    aria-hidden="true"></i></a></span>
+            </td>
+            <td>
+              <span class="table-remove"><button type="button"
+                  class="btn btn-danger btn-rounded btn-sm my-0">Remove</button></span>
+            </td>
+          </tr>
+          <!-- This is our clonable table line -->
+          <tr class="hide">
+            <td class="pt-3-half" contenteditable="true">Elisa Gallagher</td>
+            <td class="pt-3-half" contenteditable="true">31</td>
+            <td class="pt-3-half" contenteditable="true">Portica</td>
+            <td class="pt-3-half" contenteditable="true">United Kingdom</td>
+            <td class="pt-3-half" contenteditable="true">London</td>
+            <td class="pt-3-half">
+              <span class="table-up"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-up"
+                    aria-hidden="true"></i></a></span>
+              <span class="table-down"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-down"
+                    aria-hidden="true"></i></a></span>
+            </td>
+            <td>
+              <span class="table-remove"><button type="button"
+                  class="btn btn-danger btn-rounded btn-sm my-0">Remove</button></span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
       <script>
-        // Add products to <table>
-        function productsAdd() {
-          // First check if a <tbody> tag exists, add one if not
-          if ($("#productTable tbody").length == 0) {
-            $("#productTable").append("<tbody></tbody>");
-          }
-            
-          // Append product to the table
-          $("#productTable tbody").append(
-            "<tr>" +
-              "<td>Extending Bootstrap with CSS,
-                   JavaScript and jQuery</td>" +
-              "<td>6/11/2015</td>" +
-              "<td>http://bit.ly/1SNzc0i</td>" +
-            "</tr>"
-            );
-          $("#productTable tbody").append(
-            "<tr>" +
-              "<td>Build your own Bootstrap Business
-                   Application Template in MVC</td>" +
-              "<td>1/29/2015</td>" +
-              "<td>http://bit.ly/1I8ZqZg</td>" +
-            "</tr>"
-            );
-        }
+          const $tableID = $('#table');
+ const $BTN = $('#export-btn');
+ const $EXPORT = $('#export');
 
-        function productAddToTable() {
-  // First check if a <tbody> tag exists, add one if not
-  if ($("#productTable tbody").length == 0) {
-    $("#productTable").append("<tbody></tbody>");
-  }
-      
-  // Append product to the table
-  $("#productTable tbody").append(
-      "<tr>" +
-        "<td>" + $("#productname").val() + "</td>" +
-        "<td>" + $("#introdate").val() + "</td>" +
-        "<td>" + $("#url").val() + "</td>" +
-      "</tr>"
-      );
-}
+ const newTr = `
+<tr class="hide">
+  <td class="pt-3-half" contenteditable="true">Example</td>
+  <td class="pt-3-half" contenteditable="true">Example</td>
+  <td class="pt-3-half" contenteditable="true">Example</td>
+  <td class="pt-3-half" contenteditable="true">Example</td>
+  <td class="pt-3-half" contenteditable="true">Example</td>
+  <td class="pt-3-half">
+    <span class="table-up"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-up" aria-hidden="true"></i></a></span>
+    <span class="table-down"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-down" aria-hidden="true"></i></a></span>
+  </td>
+  <td>
+    <span class="table-remove"><button type="button" class="btn btn-danger btn-rounded btn-sm my-0 waves-effect waves-light">Remove</button></span>
+  </td>
+</tr>`;
 
-function productAddToTable() {
-  // First check if a <tbody> tag exists, add one if not
-  if ($("#productTable tbody").length == 0) {
-    $("#productTable").append("<tbody></tbody>");
-  }
-      
-  // Append product to the table
-  $("#productTable tbody").append(
-    "<tr>" +
-      "<td>" + $("#productname").val() + "</td>" +
-      "<td>" + $("#introdate").val() + "</td>" +
-      "<td>" + $("#url").val() + "</td>" +
-      "<td>" +
-        "<button type='button' " +
-                "onclick='productDelete(this);' " +
-                "class='btn btn-default'>" +
-                "<span class='glyphicon
-                              glyphicon-remove' />" +
-        "</button>" +
-      "</td>" +
-    "</tr>"
-  );
-}
-function productBuildTableRow() {
-  var ret =
-  "<tr>" +
-    "<td>" +
-      "<button type='button' " +
-              "onclick='productDisplay(this);' " +
-              "class='btn btn-default'>" +
-              "<span class='glyphicon glyphicon-edit' />" +
-      "</button>" +
-    "</td>" +
-    "<td>" + $("#productname").val() + "</td>" +
-    "<td>" + $("#introdate").val() + "</td>" +
-    "<td>" + $("#url").val() + "</td>" +
-    "<td>" +
-      "<button type='button' " +
-              "onclick='productDelete(this);' " +
-              "class='btn btn-default'>" +
-              "<span class='glyphicon glyphicon-remove' />" +
-      "</button>" +
-    "</td>" +
-  "</tr>"
-      
-  return ret;
-}
-function productBuildTableRow(id) {
-  var ret =
-  "<tr>" +
-    "<td>" +
-      "<button type='button' " +
-              "onclick='productDisplay(this);' " +
-              "class='btn btn-default' " +
-              "data-id='" + id + "'>" +
-              "<span class='glyphicon glyphicon-edit' />" +
-      "</button>" +
-    "</td>" +
-    "<td>" + $("#productname").val() + "</td>" +
-    "<td>" + $("#introdate").val() + "</td>" +
-    "<td>" + $("#url").val() + "</td>" +
-    "<td>" +
-      "<button type='button' " +
-              "onclick='productDelete(this);' " +
-              "class='btn btn-default' " +
-              "data-id='" + id + "'>" +
-              "<span class='glyphicon glyphicon-remove' />" +
-      "</button>" +
-    "</td>" +
-  "</tr>"
-      
-  return ret;
-}
+ $('.table-add').on('click', 'i', () => {
 
+   const $clone = $tableID.find('tbody tr').last().clone(true).removeClass('hide table-line');
+
+   if ($tableID.find('tbody tr').length === 0) {
+
+     $('tbody').append(newTr);
+   }
+
+   $tableID.find('table').append($clone);
+ });
+
+ $tableID.on('click', '.table-remove', function () {
+
+   $(this).parents('tr').detach();
+ });
+
+ $tableID.on('click', '.table-up', function () {
+
+   const $row = $(this).parents('tr');
+
+   if ($row.index() === 1) {
+     return;
+   }
+
+   $row.prev().before($row.get(0));
+ });
+
+ $tableID.on('click', '.table-down', function () {
+
+   const $row = $(this).parents('tr');
+   $row.next().after($row.get(0));
+ });
+
+ // A few jQuery helpers for exporting only
+ jQuery.fn.pop = [].pop;
+ jQuery.fn.shift = [].shift;
+
+ $BTN.on('click', () => {
+
+   const $rows = $tableID.find('tr:not(:hidden)');
+   const headers = [];
+   const data = [];
+
+   // Get the headers (add special header logic here)
+   $($rows.shift()).find('th:not(:empty)').each(function () {
+
+     headers.push($(this).text().toLowerCase());
+   });
+
+   // Turn all existing rows into a loopable array
+   $rows.each(function () {
+     const $td = $(this).find('td');
+     const h = {};
+
+     // Use the headers from earlier to name our hash keys
+     headers.forEach((header, i) => {
+
+       h[header] = $td.eq(i).text();
+     });
+
+     data.push(h);
+   });
+
+   // Output the result
+   $EXPORT.text(JSON.stringify(data));
+ });
       </script>
-
+      <script>
+        $(document).ready(function(){
+            $('button').click(function(){
+                $('tr').detach()
+            })
+        })
+    </script>
     </body>
 
 </html>
