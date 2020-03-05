@@ -1,15 +1,62 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <title>Hello World!</title>
-    <!-- https://electronjs.org/docs/tutorial/security#csp-meta-tag -->
-    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
-  </head>
-  <body>
-    <h1>Hello World!</h1>
-    We are using node <script>document.write(process.versions.node)</script>,
-    Chrome <script>document.write(process.versions.chrome)</script>,
-    and Electron <script>document.write(process.versions.electron)</script>.
-  </body>
+<body>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+  
+<div id="demo">
+<h2>The XMLHttpRequest Object</h2>
+<button type="button" onclick="loadDoc()">Change Content</button>
+<input type="text" id="myText" >
+<button type="button" onclick="myFunction()">Show</button>
+<button id="jq">button JQ</button>
+<p id="demo1">hy</p>
+</div>
+
+<script>
+function loadDoc() {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      document.getElementById("demo").innerHTML =
+      this.responseText;
+    }
+  };
+  xhttp.open("GET", "http://localhost:3000/product", true);
+  xhttp.send();
+}
+
+function myFunction() {
+  var val = document.getElementById("myText").value
+  console.log('val',val)
+  const Http = new XMLHttpRequest();
+  const url='http://localhost:3000/product?name='+val;
+  console.log('url',url)
+  Http.open("GET", url ,true);
+  Http.send()
+  // console.log('mydata',this.responseText)
+  Http.onreadystatechange = (data) => {
+  console.log('data',data);
+  console.log(Http.responseText)
+  document.getElementById("demo1").innerHTML = Http.responseText ;
+}
+
+  
+}
+</script>
+<script>
+  // $(document).ready(function(){
+  //     $('button').click(function(){
+  //         $('tr').detach()
+  //     })
+  // })
+  $('#jq').click(function(){
+    $.get('http://localhost:3000/product',function(data,status){
+      alert('Data'+data.responseText+' Status'+status)
+    })
+  })
+</script>
+
+
+</body>
 </html>
