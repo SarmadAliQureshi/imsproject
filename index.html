@@ -1,15 +1,12 @@
 <!DOCTYPE html>
 <html>
 <body>
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
   
 <div id="demo">
 <h2>The XMLHttpRequest Object</h2>
 <button type="button" onclick="loadDoc()">Change Content</button>
 <input type="text" id="myText" >
 <button type="button" onclick="myFunction()">Show</button>
-<button id="jq">button JQ</button>
 <p id="demo1">hy</p>
 </div>
 
@@ -45,15 +42,10 @@ function myFunction() {
 }
 </script>
 <script>
-  // $(document).ready(function(){
-  //     $('button').click(function(){
-  //         $('tr').detach()
-  //     })
-  // })
-  $('#jq').click(function(){
-    $.get('http://localhost:3000/product',function(data,status){
-      alert('Data'+data.responseText+' Status'+status)
-    })
+  $(document).ready(function(){
+      $('button').click(function(){
+          $('tr').detach()
+      })
   })
 </script>
 
