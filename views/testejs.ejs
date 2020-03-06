@@ -13,7 +13,7 @@
   </head>
   <body>
     <h1>Electron Application</h1>
-    <button id='additem' onclick="AddItem()">AddItem</button>
+    <button id='additem' >AddItem</button>
 
     <table class="table table-bordered table-responsive-md table-striped text-center">
         <thead>
@@ -48,10 +48,9 @@
           <!-- This is our clonable table line -->
           
           
-          
         </tbody>
       </table>
-
+      <p id="mypara">hyy</p>
       <script>
         $('#productid').on('keydown',function(e){
             console.log(e.code)
@@ -99,12 +98,19 @@
             })
         })
 
-        function AddItem(){
-            console.log('TB:',$('tbody').html())
-            $('tbody').append(newTr);
-            console.log('TB:',$('tbody').html()) 
+        // function AddItem(){
+            $(document).ready(function(){
+            $('#additem').click(function(){
+                console.log('TB:',$('#table_body').text())
+            // $('tbody').append(newTr);
+            // console.log('TB:',$('tbody').html()) 
+            console.log($('#mypara').text())
+
+            })
+            
             // console.log($('tbody').text())
-        }
+        })
+        // }
     </script>
 
       <script>
