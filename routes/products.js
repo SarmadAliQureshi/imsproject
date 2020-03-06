@@ -66,7 +66,13 @@ router.get('/product',function(req,res){
     console.log("req param",req.query)
     db.all('select * from products order by product_name asc',function(err,row){
         // console.log(row)
-        res.send(row)
+        var output = [];
+        row = row.map(function(item){
+            // console.log();
+            output.push(Object.values(item))
+        }, row)
+        res.send(output)
+    
     })
 }
 })

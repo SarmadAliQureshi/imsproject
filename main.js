@@ -14,6 +14,9 @@ app.get('/index',function(req,res){
 app.get('/ejs',function(req,res){
     res.render('testejs')
 })
+app.get('/test',function(req,res){
+    res.sendFile(__dirname+'/testhtml.html')
+})
 //connecting to sqlite
 // let db = new sqlite3.Database('./database/main.db', function(err){
 //   if (err) {
