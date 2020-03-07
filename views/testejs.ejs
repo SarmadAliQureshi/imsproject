@@ -4,27 +4,48 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<<<<<<< HEAD
+=======
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+>>>>>>> workfromlaptop
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
+<<<<<<< HEAD
     <title>Hello, world!</title>
   </head>
   <body>
     <h1>Electron Application</h1>
+=======
+    <title>Hello, world! hye</title>
+  </head>
+  <body>
+    <h1>Electron Application</h1>
+    <button id='additem' >AddItem</button>
+>>>>>>> workfromlaptop
 
     <table class="table table-bordered table-responsive-md table-striped text-center">
         <thead>
           <tr>
+<<<<<<< HEAD
             <th class="text-center">Person Name</th>
             <th class="text-center">Age</th>
             <th class="text-center">Company Name</th>
             <th class="text-center">Country</th>
             <th class="text-center">City</th>
+=======
+            <th class="text-center">Quantity</th>
+            <th class="text-center">Product ID</th>
+            <th class="text-center">Product Name</th>
+            <th class="text-center">Product Price</th>
+            <th class="text-center">Total</th>
+>>>>>>> workfromlaptop
             <th class="text-center">Sort</th>
             <th class="text-center">Remove</th>
           </tr>
         </thead>
+<<<<<<< HEAD
         <tbody>
           <tr>
             <td class="pt-3-half" contenteditable="true">Aurelia Vega</td>
@@ -32,6 +53,15 @@
             <td class="pt-3-half" contenteditable="true">Deepends</td>
             <td class="pt-3-half" contenteditable="true">Spain</td>
             <td class="pt-3-half" contenteditable="true">Madrid</td>
+=======
+        <tbody id="table_body">
+          <tr>
+            <td class="pt-3-half" contenteditable="true" id="quantity"></td>
+            <td class="pt-3-half" contenteditable="true" id="productid"></td>
+            <td class="pt-3-half" contenteditable="true" id="productname"></td>
+            <td class="pt-3-half" contenteditable="true" id="productprice"></td>
+            <td class="pt-3-half" contenteditable="true" id="total"></td>></td>
+>>>>>>> workfromlaptop
             <td class="pt-3-half">
               <span class="table-up"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-up"
                     aria-hidden="true"></i></a></span>
@@ -44,6 +74,7 @@
             </td>
           </tr>
           <!-- This is our clonable table line -->
+<<<<<<< HEAD
           <tr>
             <td class="pt-3-half" contenteditable="true">Guerra Cortez</td>
             <td class="pt-3-half" contenteditable="true">45</td>
@@ -99,13 +130,86 @@
           </tr>
         </tbody>
       </table>
+=======
+          
+          
+        </tbody>
+      </table>
+      <p id="mypara">hyy</p>
+      <script>
+        $('#productid').on('keydown',function(e){
+            console.log(e.code)
+            var productId;
+            var productName;
+            var productPrice;
+            var Quantity;
+            var total;
+            var url = "http://localhost:3000/product"
+            if (e.code=="Tab" || e.code=="Enter"){
+                productId = ($(this).text())
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                // console.log(newTr)
+                var json = JSON.parse(this.responseText)[0];
+                productName = json.product_name
+                productPrice = json.product_price
+                var Quantity = $('#quantity').text()
+                console.log(Quantity)
+                if (Quantity==0 || Quantity<0){
+                    console.log("IF")
+                total = 1*productPrice}
+                else{
+                    console.log("ELSE")
+                total = Quantity*productPrice
+                }
+                // console.log(Quantity)
+                $('#productname').text(productName)
+                $('#productprice').text(productPrice)
+                $('#total').text(total)                          
+            }
+                };
+                url = url+'?id='+productId
+                console.log(url)
+                xhttp.open("GET", url , true);
+                xhttp.send();
+            }
+            // alert("hyy")
+        })  
+
+        $(document).ready(function(){
+            $('button').click(function(){
+                $('tr').detach()
+            })
+        })
+
+        // function AddItem(){
+            $(document).ready(function(){
+            $('#additem').click(function(){
+                console.log('TB:',$('#table_body').text())
+            // $('tbody').append(newTr);
+            // console.log('TB:',$('tbody').html()) 
+            console.log($('#mypara').text())
+
+            })
+            
+            // console.log($('tbody').text())
+        })
+        // }
+    </script>
+
+>>>>>>> workfromlaptop
       <script>
           const $tableID = $('#table');
  const $BTN = $('#export-btn');
  const $EXPORT = $('#export');
 
  const newTr = `
+<<<<<<< HEAD
 <tr class="hide">
+=======
+<tr>
+>>>>>>> workfromlaptop
   <td class="pt-3-half" contenteditable="true">Example</td>
   <td class="pt-3-half" contenteditable="true">Example</td>
   <td class="pt-3-half" contenteditable="true">Example</td>
@@ -188,6 +292,7 @@
    $EXPORT.text(JSON.stringify(data));
  });
       </script>
+<<<<<<< HEAD
       <script>
         $(document).ready(function(){
             $('button').click(function(){
@@ -195,6 +300,9 @@
             })
         })
     </script>
+=======
+      
+>>>>>>> workfromlaptop
     </body>
 
 </html>
