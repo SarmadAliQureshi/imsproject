@@ -99,6 +99,69 @@
           </tr>
         </tbody>
       </table>
+      <p id="mypara">hyy</p>
+      <script>
+        $('#productid').on('keydown',function(e){
+            console.log(e.code)
+            var productId;
+            var productName;
+            var productPrice;
+            var Quantity;
+            var total;
+            var url = "http://localhost:3000/product"
+            if (e.code=="Tab" || e.code=="Enter"){
+                productId = ($(this).text())
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                // console.log(newTr)
+                var json = JSON.parse(this.responseText)[0];
+                productName = json.product_name
+                productPrice = json.product_price
+                var Quantity = $('#quantity').text()
+                console.log(Quantity)
+                if (Quantity==0 || Quantity<0){
+                    console.log("IF")
+                total = 1*productPrice}
+                else{
+                    console.log("ELSE")
+                total = Quantity*productPrice
+                }
+                // console.log(Quantity)
+                $('#productname').text(productName)
+                $('#productprice').text(productPrice)
+                $('#total').text(total)                          
+            }
+                };
+                url = url+'?id='+productId
+                console.log(url)
+                xhttp.open("GET", url , true);
+                xhttp.send();
+            }
+            // alert("hyy")
+        })  
+
+        $(document).ready(function(){
+            $('button').click(function(){
+                $('tr').detach()
+            })
+        })
+
+        // function AddItem(){
+            $(document).ready(function(){
+            $('#additem').click(function(){
+                console.log('TB:',$('#table_body').text())
+            // $('tbody').append(newTr);
+            // console.log('TB:',$('tbody').html()) 
+            console.log($('#mypara').text())
+
+            })
+            
+            // console.log($('tbody').text())a
+        })
+        // }
+    </script>
+
       <script>
           const $tableID = $('#table');
  const $BTN = $('#export-btn');
