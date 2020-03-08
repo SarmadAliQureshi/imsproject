@@ -15,6 +15,7 @@
     <h1>Electron Application</h1>
     <button id='additem' >AddItem</button>
 
+
     <table class="table table-bordered table-responsive-md table-striped text-center">
         <thead>
           <tr>
@@ -23,17 +24,36 @@
             <th class="text-center">Product Name</th>
             <th class="text-center">Product Price</th>
             <th class="text-center">Total</th>
-            <th class="text-center">Sort</th>
+            <th class="text-center">Net Total</th>
             <th class="text-center">Remove</th>
           </tr>
         </thead>
         <tbody id="table_body">
           <tr>
-            <td class="pt-3-half" contenteditable="true" id="quantity"></td>
-            <td class="pt-3-half" contenteditable="true" id="productid"></td>
-            <td class="pt-3-half" contenteditable="true" id="productname"></td>
-            <td class="pt-3-half" contenteditable="true" id="productprice"></td>
-            <td class="pt-3-half" contenteditable="true" id="total"></td>></td>
+            <td class="pt-3-half quantity" contenteditable="true" id="quantity"></td>
+            <td class="pt-3-half productid" contenteditable="true" id="productid" ></td>
+            <td class="pt-3-half productname" contenteditable="true" id="productname"></td>
+            <td class="pt-3-half productprice" contenteditable="true" id="productprice"></td>
+            <td class="pt-3-half total" contenteditable="true" id="total"></td>></td>
+            <td class="pt-3-half nettotal" contenteditable="true" id="nettotal"></td>></td>
+            <!-- <td class="pt-3-half">
+              <span class="table-up"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-up"
+                    aria-hidden="true"></i></a></span>
+              <span class="table-down"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-down"
+                    aria-hidden="true"></i></a></span>
+            </td> -->
+            <td>
+              <span class="table-remove" ><button type="button" 
+                  class="btn btn-danger btn-rounded btn-sm my-0">Remove</button></span>
+            </td>
+          </tr>
+
+          <tr>
+            <td class="pt-3-half quantity" contenteditable="true" id="quantity"></td>
+            <td class="pt-3-half productid" contenteditable="true" id="productid" ></td>
+            <td class="pt-3-half productname" contenteditable="true" id="productname"></td>
+            <td class="pt-3-half productprice" contenteditable="true" id="productprice"></td>
+            <td class="pt-3-half total" contenteditable="true" id="total"></td>></td>
             <td class="pt-3-half">
               <span class="table-up"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-up"
                     aria-hidden="true"></i></a></span>
@@ -41,18 +61,57 @@
                     aria-hidden="true"></i></a></span>
             </td>
             <td>
-              <span class="table-remove"><button type="button"
+              <span class="table-remove" ><button type="button" 
                   class="btn btn-danger btn-rounded btn-sm my-0">Remove</button></span>
             </td>
           </tr>
-          <!-- This is our clonable table line -->
+
+         
+          <!-- This is our clonable table line hy -->
           
           
         </tbody>
       </table>
       <p id="mypara">hyy</p>
       <script>
-        $('#productid').on('keydown',function(e){
+
+
+        $('tbody').on('click','tr',function(e){
+          console.log('Down')
+        })
+
+        // $('tbody').on('click','tr',function(){
+        //   // console.log($(this).hasClass('productid'))
+        //   console.log($(this).find('td').hasClass('productname'))
+        //   // $(this).find('td').each(function(){
+        //   //   console.log($(this).hasClass('productname'))
+        //   // })
+        //   // console.log($(this))
+          
+        //   $(this).find('td').each(function(){
+        //     $(this).each(function(){
+        //       // console.log(this)
+        //       $(this).find('.productname').text()
+        //       $(this).removeClass('productid')
+        //       $(this).removeClass('productprice')
+        //       console.log('PN',$(this).text())
+
+        //     })
+        //   })
+
+        //   // $(this).removeClass
+        //   // console.log('clicked',$(this).hasClass('dataadded'))
+        //   // if ('clicked',$(this).hasClass('productid') ==false){
+        //   //   $('#productname').addClass('productid')
+        //   //   console.log('Adding')
+          
+        //   // if('clicked',$('tbody td').hasClass('productname')){var i;}
+        //   // else{
+        //   // $('#productname').addClass('productname')}
+        // })
+
+        
+        $('tbody').on('keydown','.productid',function(e){
             console.log(e.code)
             var productId;
             var productName;
@@ -67,50 +126,75 @@
                 if (this.readyState == 4 && this.status == 200) {
                 // console.log(newTr)
                 var json = JSON.parse(this.responseText)[0];
+                // console.log('json',json)
                 productName = json.product_name
                 productPrice = json.product_price
-                var Quantity = $('#quantity').text()
-                console.log(Quantity)
+                var Quantity = $('.quantity').text()
+                console.log('Quantity log', $(this).text(), Quantity)
                 if (Quantity==0 || Quantity<0){
                     console.log("IF")
-                total = 1*productPrice}
+                total = 1* productPrice}
                 else{
                     console.log("ELSE")
                 total = Quantity*productPrice
                 }
                 // console.log(Quantity)
-                $('#productname').text(productName)
-                $('#productprice').text(productPrice)
-                $('#total').text(total)                          
+                $('.productname').text(productName)
+                $('.productprice').text(productPrice)
+                $('.total').text(total)  
+                                        
             }
                 };
                 url = url+'?id='+productId
                 console.log(url)
                 xhttp.open("GET", url , true);
                 xhttp.send();
-            }
-            // alert("hyy")
-        })  
+                
 
-        $(document).ready(function(){
-            $('button').click(function(){
-                $('tr').detach()
-            })
-        })
+            }
+            Quantity=1
+            
+            // alert("hyy")
+        }) 
+
+        
+        // Button to add new rows in the table 
 
         // function AddItem(){
-            $(document).ready(function(){
-            $('#additem').click(function(){
-                console.log('TB:',$('#table_body').text())
-            // $('tbody').append(newTr);
-            // console.log('TB:',$('tbody').html()) 
-            console.log($('#mypara').text())
+        $(document).ready(function(){
+          
+        var a = $('#table_body').html()
+        $('#additem').on('click',function(){
 
-            })
+            // $(".quantity").removeAttr('contenteditable')
+            // $(".productname").removeAttr('contenteditable')
+            // $(".productprice").removeAttr('contenteditable')
+            // $(".total").removeAttr('contenteditable')
+
+            $(".quantity").toggleClass('quantity')
+            $(".productname").toggleClass('productname')
+            $(".productid").toggleClass('productid')  
+            $(".productprice").toggleClass('productprice') 
+            $(".total").toggleClass('total') 
             
-            // console.log($('tbody').text())a
+          // $(".productname").removeClass('productname') 
+
+            // console.log('TB:',a)
+            $('#table_body').append(newTr)
+
+            })            
         })
         // }
+
+        // Button to remove rows from the table
+
+        $(document).ready(function(){
+          $('tbody').on('click','.table-remove',function(){
+            $(this).closest("tr").remove();
+            console.log('test1')
+          })
+        })
+        
     </script>
 
       <script>
@@ -119,88 +203,92 @@
  const $EXPORT = $('#export');
 
  const newTr = `
-<tr>
-  <td class="pt-3-half" contenteditable="true">Example</td>
-  <td class="pt-3-half" contenteditable="true">Example</td>
-  <td class="pt-3-half" contenteditable="true">Example</td>
-  <td class="pt-3-half" contenteditable="true">Example</td>
-  <td class="pt-3-half" contenteditable="true">Example</td>
-  <td class="pt-3-half">
-    <span class="table-up"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-up" aria-hidden="true"></i></a></span>
-    <span class="table-down"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-down" aria-hidden="true"></i></a></span>
-  </td>
-  <td>
-    <span class="table-remove"><button type="button" class="btn btn-danger btn-rounded btn-sm my-0 waves-effect waves-light">Remove</button></span>
-  </td>
-</tr>`;
+ <tr>
+            <td class="pt-3-half quantity" contenteditable="true" id="quantity"></td>
+            <td class="pt-3-half productid" contenteditable="true" id="productid" ></td>
+            <td class="pt-3-half productname" contenteditable="true" id="productname"></td>
+            <td class="pt-3-half productprice" contenteditable="true" id="productprice"></td>
+            <td class="pt-3-half total" contenteditable="true" id="total"></td>></td>
+            <td class="pt-3-half">
+              <span class="table-up"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-up"
+                    aria-hidden="true"></i></a></span>
+              <span class="table-down"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-down"
+                    aria-hidden="true"></i></a></span>
+            </td>
+            <td>
+              <span class="table-remove" ><button type="button" 
+                  class="btn btn-danger btn-rounded btn-sm my-0">Remove</button></span>
+            </td>
+          </tr>
+ `;
 
- $('.table-add').on('click', 'i', () => {
+//  $('.table-add').on('click', 'i', () => {
 
-   const $clone = $tableID.find('tbody tr').last().clone(true).removeClass('hide table-line');
+//    const $clone = $tableID.find('tbody tr').last().clone(true).removeClass('hide table-line');
 
-   if ($tableID.find('tbody tr').length === 0) {
+//    if ($tableID.find('tbody tr').length === 0) {
 
-     $('tbody').append(newTr);
-   }
+//      $('tbody').append(newTr);
+//    }
 
-   $tableID.find('table').append($clone);
- });
+//    $tableID.find('table').append($clone);
+//  });
 
- $tableID.on('click', '.table-remove', function () {
+//  $tableID.on('click', '.table-remove', function () {
 
-   $(this).parents('tr').detach();
- });
+//    $(this).parents('tr').detach();
+//  });
 
- $tableID.on('click', '.table-up', function () {
+//  $tableID.on('click', '.table-up', function () {
 
-   const $row = $(this).parents('tr');
+//    const $row = $(this).parents('tr');
 
-   if ($row.index() === 1) {
-     return;
-   }
+//    if ($row.index() === 1) {
+//      return;
+//    }
 
-   $row.prev().before($row.get(0));
- });
+//    $row.prev().before($row.get(0));
+//  });
 
- $tableID.on('click', '.table-down', function () {
+//  $tableID.on('click', '.table-down', function () {
 
-   const $row = $(this).parents('tr');
-   $row.next().after($row.get(0));
- });
+//    const $row = $(this).parents('tr');
+//    $row.next().after($row.get(0));
+//  });
 
- // A few jQuery helpers for exporting only
- jQuery.fn.pop = [].pop;
- jQuery.fn.shift = [].shift;
+//  // A few jQuery helpers for exporting only
+//  jQuery.fn.pop = [].pop;
+//  jQuery.fn.shift = [].shift;
 
- $BTN.on('click', () => {
+//  $BTN.on('click', () => {
 
-   const $rows = $tableID.find('tr:not(:hidden)');
-   const headers = [];
-   const data = [];
+//    const $rows = $tableID.find('tr:not(:hidden)');
+//    const headers = [];
+//    const data = [];
 
-   // Get the headers (add special header logic here)
-   $($rows.shift()).find('th:not(:empty)').each(function () {
+//    // Get the headers (add special header logic here)
+//    $($rows.shift()).find('th:not(:empty)').each(function () {
 
-     headers.push($(this).text().toLowerCase());
-   });
+//      headers.push($(this).text().toLowerCase());
+//    });
 
-   // Turn all existing rows into a loopable array
-   $rows.each(function () {
-     const $td = $(this).find('td');
-     const h = {};
+//    // Turn all existing rows into a loopable array
+//    $rows.each(function () {
+//      const $td = $(this).find('td');
+//      const h = {};
 
-     // Use the headers from earlier to name our hash keys
-     headers.forEach((header, i) => {
+//      // Use the headers from earlier to name our hash keys
+//      headers.forEach((header, i) => {
 
-       h[header] = $td.eq(i).text();
-     });
+//        h[header] = $td.eq(i).text();
+//      });
 
-     data.push(h);
-   });
+//      data.push(h);
+//    });
 
-   // Output the result
-   $EXPORT.text(JSON.stringify(data));
- });
+//    // Output the result
+//    $EXPORT.text(JSON.stringify(data));
+//  });
       </script>
       
     </body>
