@@ -29,7 +29,7 @@
           </tr>
         </thead>
         <tbody id="table_body">
-          <tr>
+          <tr id="row1">
             <td class="pt-3-half quantity" contenteditable="true" id="quantity"></td>
             <td class="pt-3-half productid" contenteditable="true" id="productid" ></td>
             <td class="pt-3-half productname" contenteditable="true" id="productname"></td>
@@ -46,7 +46,10 @@
               <span class="table-remove" ><button type="button" 
                   class="btn btn-danger btn-rounded btn-sm my-0">Remove</button></span>
             </td>
-          </tr>
+            </tr>
+
+          
+        
 
           <!-- <tr>
             <td class="pt-3-half quantity" contenteditable="true" id="quantity"></td>
@@ -71,10 +74,18 @@
           
           
         </tbody>
+        <tr id='nettotalfoot'>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td colspan="2" class="total-line">Subtotal</td>
+          <td class="total-value"><div id="subtotal"></div></td>
+      </tr>
       </table>
       <p id="mypara">hyy</p>
       <script>
-
+        var price_removed=0;
 
         $('tbody').on('click','tr',function(e){
           console.log('Down')
@@ -143,10 +154,18 @@
                 $('.productname').text(productName)
                 $('.productprice').text(productPrice)
                 $('.total').text(total)
-
+                console.log("total 1",total)
+                console.log("nettotal 1",nettotal)
+                console.log("price_removed",price_removed)
                 nettotal= nettotal + total
-                $('.nettotal').text(nettotal)
-                console.log('nettotal',nettotal)  
+                console.log("total 2",total)
+                console.log("nettotal 2",nettotal)
+                $('.total-value').text(nettotal)
+                price_removed = 0
+                total = 0
+                // $('.nettotal').text(nettotal)
+
+                // console.log('nettotal',nettotal)  
                                         
             }
                 };
@@ -169,11 +188,21 @@
         // Button to add new rows in the table 
 
         // function AddItem(){
+        var rowcount = 1
         $(document).ready(function(){
           
         var a = $('#table_body').html()
         $('#additem').on('click',function(){
+            lastrowcheck = '#row'+rowcount
+            console.log('row check',$('#row1').find('#productid').text())
 
+            // This if statement tests if the last row is filled or not before adding new row
+            
+            if('row check',$(lastrowcheck).find('#productid').text()==''){
+              console.log("Please Fill the current row first")
+            }
+            else{
+            rowcount=rowcount+1
             // $(".quantity").removeAttr('contenteditable')
             // $(".productname").removeAttr('contenteditable')
             // $(".productprice").removeAttr('contenteditable')
@@ -184,19 +213,25 @@
             $(".productid").toggleClass('productid')  
             $(".productprice").toggleClass('productprice') 
             $(".total").toggleClass('total')
-            $(".nettotal").toggleClass('nettotal')  
+            // $(".nettotal").toggleClass('nettotal')  
             
           // $(".productname").removeClass('productname') 
-
+            
             // console.log('TB:',a)
-            $('#table_body').append(newTr)
+            // console.log(newRow(rowcount))
+            // $('#table_body').append(newTr)
+            $('#table_body').append(newRow(rowcount))
+            
+
+            console.log('rowcount inside',rowcount)
+            }
 
             })            
         })
         // }
 
         // Button to remove rows from the table
-        var price_removed;
+        
 
         $(document).ready(function(){
           $('tbody').on('click','.table-remove',function(){
@@ -207,8 +242,13 @@
               
               console.log('Data',$(this).find('#total').text())
               price_removed = $(this).find('#total').text()
-              console.log('remve',price_removed)
-              console.log('net total',nettotal)
+              nettotal = nettotal - price_removed
+              var subtotal = $('.total-value').text()
+              console.log('net total before price removed',subtotal)
+              subtotal = subtotal - price_removed
+              $('.total-value').text(subtotal)
+              console.log('remove',price_removed)
+              console.log('net total after price removed',subtotal)
               // nettotal-price_removed
               // $('.nettotal').text(nettotal-price_removed)a
             })
@@ -220,12 +260,14 @@
     </script>
 
       <script>
+        
+        console.log('rowcount outside',rowcount)
           const $tableID = $('#table');
  const $BTN = $('#export-btn');
  const $EXPORT = $('#export');
-
+function newRow(rowcount) {
  const newTr = `
- <tr>
+ <tr id=row`+rowcount+`>
             <td class="pt-3-half quantity" contenteditable="true" id="quantity"></td>
             <td class="pt-3-half productid" contenteditable="true" id="productid" ></td>
             <td class="pt-3-half productname" contenteditable="true" id="productname"></td>
@@ -244,7 +286,8 @@
             </td>
           </tr>
  `;
-
+ return newTr
+        }
 //  $('.table-add').on('click', 'i', () => {
 
 //    const $clone = $tableID.find('tbody tr').last().clone(true).removeClass('hide table-line');
