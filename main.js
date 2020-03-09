@@ -1,12 +1,16 @@
 const express = require('express')
-const route = require('./routes/products')
+const route_products = require('./routes/products')
+const route_customers = require('./routes/customers')
+const route_invoices = require('./routes/invoices')
 const sqlite3 = require('sqlite3')
 const bodyParser = require('body-parser')
 const app = express();
 
 app.set('view engine','ejs')
 app.use(bodyParser.json())
-app.use(route)
+app.use(route_products)
+app.use(route_customers)
+app.use(route_invoices)
 app.use('/assets',express.static('assets'))
 app.get('/index',function(req,res){
     res.sendFile(__dirname+'/index.html')
