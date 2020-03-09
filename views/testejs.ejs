@@ -48,24 +48,24 @@
             </td>
           </tr>
 
-          <tr>
+          <!-- <tr>
             <td class="pt-3-half quantity" contenteditable="true" id="quantity"></td>
             <td class="pt-3-half productid" contenteditable="true" id="productid" ></td>
             <td class="pt-3-half productname" contenteditable="true" id="productname"></td>
             <td class="pt-3-half productprice" contenteditable="true" id="productprice"></td>
             <td class="pt-3-half total" contenteditable="true" id="total"></td>></td>
-            <td class="pt-3-half">
+            <td class="pt-3-half nettotal" contenteditable="true" id="nettotal"></td>></td> -->
+            <!-- <td class="pt-3-half">
               <span class="table-up"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-up"
                     aria-hidden="true"></i></a></span>
               <span class="table-down"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-down"
                     aria-hidden="true"></i></a></span>
-            </td>
-            <td>
+            </td> -->
+            <!-- <td>
               <span class="table-remove" ><button type="button" 
                   class="btn btn-danger btn-rounded btn-sm my-0">Remove</button></span>
             </td>
-          </tr>
-
+          </tr> -->
          
           <!-- This is our clonable table line hy -->
           
@@ -110,7 +110,7 @@
         //   // $('#productname').addClass('productname')}
         // })
 
-        
+        var nettotal=0;
         $('tbody').on('keydown','.productid',function(e){
             console.log(e.code)
             var productId;
@@ -118,6 +118,7 @@
             var productPrice;
             var Quantity;
             var total;
+            
             var url = "http://localhost:3000/product"
             if (e.code=="Tab" || e.code=="Enter"){
                 productId = ($(this).text())
@@ -141,7 +142,11 @@
                 // console.log(Quantity)
                 $('.productname').text(productName)
                 $('.productprice').text(productPrice)
-                $('.total').text(total)  
+                $('.total').text(total)
+
+                nettotal= nettotal + total
+                $('.nettotal').text(nettotal)
+                console.log('nettotal',nettotal)  
                                         
             }
                 };
@@ -150,9 +155,12 @@
                 xhttp.open("GET", url , true);
                 xhttp.send();
                 
+                
 
             }
+            
             Quantity=1
+            
             
             // alert("hyy")
         }) 
@@ -175,7 +183,8 @@
             $(".productname").toggleClass('productname')
             $(".productid").toggleClass('productid')  
             $(".productprice").toggleClass('productprice') 
-            $(".total").toggleClass('total') 
+            $(".total").toggleClass('total')
+            $(".nettotal").toggleClass('nettotal')  
             
           // $(".productname").removeClass('productname') 
 
@@ -187,9 +196,22 @@
         // }
 
         // Button to remove rows from the table
+        var price_removed;
 
         $(document).ready(function(){
           $('tbody').on('click','.table-remove',function(){
+            console.log("This var ",$(this).closest('tr td'))
+
+            $(this).closest('tr').each(function(){
+              var t = Array($(this).text())
+              
+              console.log('Data',$(this).find('#total').text())
+              price_removed = $(this).find('#total').text()
+              console.log('remve',price_removed)
+              console.log('net total',nettotal)
+              // nettotal-price_removed
+              // $('.nettotal').text(nettotal-price_removed)a
+            })
             $(this).closest("tr").remove();
             console.log('test1')
           })
@@ -209,12 +231,13 @@
             <td class="pt-3-half productname" contenteditable="true" id="productname"></td>
             <td class="pt-3-half productprice" contenteditable="true" id="productprice"></td>
             <td class="pt-3-half total" contenteditable="true" id="total"></td>></td>
-            <td class="pt-3-half">
+            <td class="pt-3-half nettotal" contenteditable="true" id="nettotal"></td>></td>
+            <!-- <td class="pt-3-half">
               <span class="table-up"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-up"
                     aria-hidden="true"></i></a></span>
               <span class="table-down"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-down"
                     aria-hidden="true"></i></a></span>
-            </td>
+            </td> -->
             <td>
               <span class="table-remove" ><button type="button" 
                   class="btn btn-danger btn-rounded btn-sm my-0">Remove</button></span>
