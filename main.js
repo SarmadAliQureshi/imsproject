@@ -7,8 +7,9 @@ const app = express();
 app.set('view engine','ejs')
 app.use(bodyParser.json())
 app.use(route)
-app.get('/home',function(req,res){
-    res.sendFile(__dirname+'/testhtml.html')
+app.use('/assets',express.static('assets'))
+app.get('/index',function(req,res){
+    res.sendFile(__dirname+'/index.html')
 })
 app.get('/ejs',function(req,res){
     res.render('testejs')

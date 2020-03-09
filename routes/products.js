@@ -72,7 +72,7 @@ router.get('/product',function(req,res){
 })
 
 router.post('/product',function(req,res){
-
+    console.log("IN post req")
     column_names = Object.keys(req.body)
     data = Object.values(req.body)
     var newdata = []
@@ -91,13 +91,15 @@ router.post('/product',function(req,res){
     // sql = `insert into products(${column_names}) values(${req.body.product_id},'${req.body.product_name}',${req.body.product_price})`
 
     sql = `insert into products(${column_names}) values(${newdata})`
+    console.log("a",sql,column_names,newdata)
     db.run(sql, function(err) {
         if (err) {
           console.log(err.message);
           res.send(JSON.stringify({error:err.message}))
         }
+        else{
         res.send(JSON.stringify({statuscode:res.statusCode}))
-        console.log(`Rows inserted`,data);
+        console.log(`Rows inserted`,data);}
       })
     console.log(column_names+' : '+data)
     console.log(req.body)
@@ -169,9 +171,10 @@ router.put('/product',function(req,res){
 
           return console.error(err.message);
         }
+        else{
         res.send({success:`product with id ${req.query.id} updated`})
 
-        console.log(`Rows updated`);
+        console.log(`Rows updated`);}
       })
     }
     else if ("name" in req.query){
@@ -182,9 +185,10 @@ router.put('/product',function(req,res){
             res.send(JSON.stringify({error:err.message}))
             return console.error(err.message);
         }
+        else{
         res.send({success:`product ${req.query.name} updated`})
 
-        console.log(`Rows updated`);
+        console.log(`Rows updated`);}
       })
     }
     console.log(column_names+' : '+data)
@@ -198,7 +202,6 @@ router.delete('/product',function(req,res){
     console.log(req.params)
     
    
-    console.log("All data : ",column_names,newdata)
     if ("product_id" in req.body && "product_name" in req.body){
         sql = `delete from products where product_id=${req.body['product_id']} and product_name='${req.body['product_name']}'`
         console.log(sql)
@@ -207,7 +210,8 @@ router.delete('/product',function(req,res){
               return console.error(err.message);
             }
             console.log(`Rows deleted`);
-          }) 
+          })
+          res.end() 
     }    
     else if ("product_id" in req.body){
     sql = `delete from products where product_id=${req.body['product_id']}`
@@ -218,6 +222,7 @@ router.delete('/product',function(req,res){
         }
         console.log(`Rows deleted`);
       })
+      res.end()
     }
     else if ("product_name" in req.body){
         sql = `delete from  products  where product_name='${req.body['product_name']}'`
@@ -230,12 +235,12 @@ router.delete('/product',function(req,res){
         }
         console.log(`Rows deleted`);
       })
+      res.end()
     }
     else{
         res.send({error:`column name doesnot exists`})
     }
 
-    res.end()
 })
 
 
