@@ -95,83 +95,167 @@
       <p id="mypara">hyy</p>
       <script>
         var price_removed=0;
-        var customer_exists_flag;
-
-        //Adding customer information
-        function check_if_customer_exists(){
+        var customerId;
+        var customerName;
+        var customerPhone;
+        var customerAddress;
+        var flag_after_awaitcustomercheck;
 
         $('#customer_id').on('keydown',function(e){
-            console.log(e.code)
-            var customerId;
-            var customerName;
-            var customerPhone;
-            var customerAddress;
-            var total;
-            // console.log(this)
+        if (e.code=="Tab" || e.code=="Enter"){  
+          customerId = ($(this).val())
+          console.log("cid",customerId)
+        function getQuote(){
+        var total;
+        var quote
+        var customer_existance_flag;
+        return new Promise(function(resolve,reject){
+            console.log('in promise')
+            quote='how are you'
             var url = "http://localhost:3000/customers"
-            if (e.code=="Tab" || e.code=="Enter"){
-                customerId = ($(this).val())
                 // console.log("cid",customerId)
                 var xhttp = new XMLHttpRequest();
                 xhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
-                // console.log(newTr)
-                var json = JSON.parse(this.responseText)[0];
-                console.log("L",json)
-                if (json==undefined){
-                  console.log("Error")
-                  customer_exists_flag = false
-                }
-                else{
-                  console.log("True")
-                  customer_exists_flag = true
 
-
-                // if(Object.keys(json).includes("customer_id") && Object.keys(json).includes("customer_name")){
-                //     console.log("True")
-                //     customer_exists_flag = true;
-                // }
-                // else{
-                //   console.log("False")
-                //   customer_exists_flag = false;
-                // }
-                // console.log('resp',this.responseText)
-                // customer_exists_flag =
-                // console.log('json',json)
-                customerName = json.customer_name
-                customerPhone = json.customer_phone
-                customerAddress = json.address
-
-                // console.log(customerName,customerPhone,customerAddress)
-
-                $('#customer_name').val(customerName)
-                $('#customer_phone').val(customerPhone)
-                $('#customer_address').val(customerAddress)
+                    var json1 = JSON.parse(this.responseText)
+                    var json = JSON.parse(this.responseText)[0]
+                    var keys = Object.keys(json1)
+                    console.log('keys:',json1)
+                    if (json1.hasOwnProperty('result')){
+                        customer_existance_flag=false
+                    }
+                    else{
+                        console.log("In else Customer Exists")
+                        customer_existance_flag=true
+                        customerName = json.customer_name
+                        customerPhone = json.customer_phone
+                        customerAddress = json.address
+                        console.log('mjson',json)
+                        console.log('check',customerName,customerPhone,customerAddress)
+                        $('#customer_name').val(customerName)
+                        $('#customer_phone').val(customerPhone)
+                        $('#customer_address').val(customerAddress)
+                    }
+                    resolve(customer_existance_flag) 
 
                 }
-
+                
             }
-            console.log('Flag 2',customer_exists_flag)
-             
-          }
-                console.log('Flag 3',customer_exists_flag)
-
+            
                 url = url+'?id='+customerId
                 console.log(url)
                 xhttp.open("GET", url , true);
                 xhttp.send();
+                // console.log('resp',.responseText)
+                
+
+        })
+        
+    }
+    async function main(){
+        console.log("In main func")
+        var customerchekreturn = await getQuote()
+        flag_after_awaitcustomercheck = customerchekreturn
+        console.log("My quote is ", customerchekreturn)
+    }
+    main()
+  }
+    
+  
+  })
+
+
+        //Adding customer information
+      //   function check_if_customer_exists(){
+
+      //   $('#customer_id').on('keydown',function(e){
+      //     var customer_exists_flag;
+      //       console.log(e.code)
+      //       var customerId;
+      //       var customerName;
+      //       var customerPhone;
+      //       var customerAddress;
+      //       var total;
+      //       // console.log(this)
+      //       return new Promise(function(resolve, reject){
+
+            
+      //       var url = "http://localhost:3000/customers"
+      //       if (e.code=="Tab" || e.code=="Enter"){
+      //           customerId = ($(this).val())
+      //           // console.log("cid",customerId)
+      //           var xhttp = new XMLHttpRequest();
+      //           xhttp.onreadystatechange = function() {
+      //           if (this.readyState == 4 && this.status == 200) {
+      //           // console.log(newTr)
+      //           var json = JSON.parse(this.responseText)[0];
+      //           console.log("L",json)
+      //           if (json==undefined){
+      //             console.log("Error")
+      //             customer_exists_flag = false
+      //           }
+      //           else{
+      //             console.log("True")
+      //             customer_exists_flag = true
+
+
+      //           // if(Object.keys(json).includes("customer_id") && Object.keys(json).includes("customer_name")){
+      //           //     console.log("True")
+      //           //     customer_exists_flag = true;
+      //           // }
+      //           // else{
+      //           //   console.log("False")
+      //           //   customer_exists_flag = false;
+      //           // }
+      //           // console.log('resp',this.responseText)
+      //           // customer_exists_flag =
+      //           // console.log('json',json)
+      //           customerName = json.customer_name
+      //           customerPhone = json.customer_phone
+      //           customerAddress = json.address
+
+      //           // console.log(customerName,customerPhone,customerAddress)
+
+      //           $('#customer_name').val(customerName)
+      //           $('#customer_phone').val(customerPhone)
+      //           $('#customer_address').val(customerAddress)
+
+      //           }
+      //           resolve('customer_exists_flag') 
+
+      //       }
+      //       console.log('Flag 2',customer_exists_flag)
+             
+      //     }
+      //           console.log('Flag 3',customer_exists_flag)
+
+      //           url = url+'?id='+customerId
+      //           console.log(url)
+      //           xhttp.open("GET", url , true);
+      //           xhttp.send();
                 
                 
-        }
-        console.log("Flag 1",customer_exists_flag)
+                
+      //   }
+        
+
+      //   // promise ends heres
+      // })
+      //   console.log("Flag 1",customer_exists_flag)
         
         
-          })
+      //     })
 
-          return customer_exists_flag
-        }
+      //   }
 
-        console.log("Fun log",check_if_customer_exists())
+      //   console.log("Fun log",check_if_customer_exists())
+
+      //   async function main(){
+      //     var t = await check_if_customer_exists();
+      //     console.log("Async var is",t)
+      //   }
+      //   main()
         
 
         // $('tbody').on('click','tr',function(){
@@ -206,7 +290,7 @@
 
         var nettotal=0;
         $('tbody').on('keydown','.productid',function(e){
-            console.log(e.code)
+
             var productId;
             var productName;
             var productPrice;
@@ -215,13 +299,112 @@
             
             var url = "http://localhost:3000/product"
             if (e.code=="Tab" || e.code=="Enter"){
+              console.log('e.code',flag_after_awaitcustomercheck)
+
+                  // If the customer is already present in the database
+                  if (flag_after_awaitcustomercheck==true){
+                    var urlproducts = "http://localhost:3000/product"
+                    var urlallinvoices = "http://localhost:3000/allinvoices"
+                    console.log("111",customerName,customerId)
+                    var xhttpallinvoices = new XMLHttpRequest();
+                    xhttpallinvoices.onreadystatechange = function(){
+                      if (this.readyState == 4 && this.status == 200) {
+                      // console.log(newTr)
+                      var json = JSON.parse(this.responseText)[0];
+                      console.log('myjson',json)
+                      //This means that the customer exists but he has not purchased the curret product
+                      //customer is buying this product for the first time
+                      if (json==undefined){
+                        var xhttpnewdata = new XMLHttpRequest();
+                        xhttpnewdata.onreadystatechange = function(){
+                          if (this.readyState == 4 && this.status == 200) {
+                            console.log("myjson resp1",this.responseText)
+                            var json = JSON.parse(this.responseText)[0];
+                            insertProductDetailsInvoice(json)
+                          }
+
+                        }
+                        urlproducts = urlproducts + '?id='+productId
+                        console.log('urlproducts',urlproducts)
+                        xhttpnewdata.open("GET",urlproducts,true);
+                        xhttpnewdata.send()
+
+                      }
+                      else{
+                        // The the customer has already purchased the selected product the fetch the last stored price for him
+                       insertProductDetailsInvoice(json)
+                      }
+                      }
+
+                    }
+                      productId = ($(this).text())
+                      urlallinvoices = urlallinvoices+'?customer_id='+customerId+'&product_id='+productId
+                      console.log(urlallinvoices)
+                      xhttpallinvoices.open("GET", urlallinvoices , true);
+                      xhttpallinvoices.send();
+
+                  }
+
+            // If the customer is new      
+            else{      
+
                 productId = ($(this).text())
                 var xhttp = new XMLHttpRequest();
                 xhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
                 // console.log(newTr)
                 var json = JSON.parse(this.responseText)[0];
+                insertProductDetailsInvoice(json)
                 // console.log('json',json)
+                // productName = json.product_name
+                // productPrice = json.product_price
+                // var Quantity = $('.quantity').text()
+                // console.log('Quantity log', $(this).text(), Quantity)
+                // if (Quantity==0 || Quantity<0){
+                //     console.log("IF")
+                // total = 1* productPrice}
+                // else{
+                //     console.log("ELSE")
+                // total = Quantity*productPrice
+                // }
+                // // console.log(Quantity)
+                // $('.productname').text(productName)
+                // $('.productprice').text(productPrice)
+                // $('.total').text(total)
+                // // console.log("total 1",total)
+                // // console.log("nettotal 1",nettotal)
+                // // console.log("price_removed",price_removed)
+                // nettotal= nettotal + total
+                // // console.log("total 2",total)
+                // // console.log("nettotal 2",nettotal)
+                // $('.total-value').text(nettotal)
+                // price_removed = 0
+                // total = 0
+                // // $('.nettotal').text(nettotal)
+
+                // // console.log('nettotal',nettotal)  
+                                        
+            }
+                };
+                url = url+'?id='+productId
+                console.log(url)
+                xhttp.open("GET", url , true);
+                xhttp.send();
+                
+                
+              }
+              Quantity=1
+            }
+            
+        
+            
+            
+            
+        })
+        
+        function insertProductDetailsInvoice(incomingjson){
+                // var json = JSON.parse(this.responseText)[0];
+                json = incomingjson
                 productName = json.product_name
                 productPrice = json.product_price
                 var Quantity = $('.quantity').text()
@@ -237,33 +420,19 @@
                 $('.productname').text(productName)
                 $('.productprice').text(productPrice)
                 $('.total').text(total)
-                console.log("total 1",total)
-                console.log("nettotal 1",nettotal)
-                console.log("price_removed",price_removed)
+                // console.log("total 1",total)
+                // console.log("nettotal 1",nettotal)
+                // console.log("price_removed",price_removed)
                 nettotal= nettotal + total
-                console.log("total 2",total)
-                console.log("nettotal 2",nettotal)
+                // console.log("total 2",total)
+                // console.log("nettotal 2",nettotal)
                 $('.total-value').text(nettotal)
                 price_removed = 0
                 total = 0
                 // $('.nettotal').text(nettotal)
 
-                // console.log('nettotal',nettotal)  
-                                        
-            }
-                };
-                url = url+'?id='+productId
-                console.log(url)
-                xhttp.open("GET", url , true);
-                xhttp.send();
-                
-                
-
-            }
-            
-            Quantity=1
-            
-        }) 
+                // console.log('nettotal',nettotal)
+        }
 
         
         // Button to add new rows in the table 

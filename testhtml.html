@@ -11,6 +11,7 @@
     <title>Document</title>
 </head>
 <body>
+    <button onclick="onclickfunc()">ckic</button>
     <h1>I will show this test html</h1>
     <table id="example" class="display" style="width:100%">
         <!-- <thead>
@@ -36,6 +37,54 @@
     </table>
 
     <script>
+    
+    function onclickfunc(){
+    
+    function getQuote(){
+        var quote
+        var customer_existance_flag;
+        return new Promise(function(resolve,reject){
+            console.log('in promise')
+            quote='how are you'
+            var url = "http://localhost:3000/customers?id=7"
+                // console.log("cid",customerId)
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+
+                    var json = JSON.parse(this.responseText)
+                    var keys = Object.keys(json)
+                    console.log(keys)
+                    if (json.hasOwnProperty('result')){
+                        customer_existance_flag=false
+                    }
+                    else{
+                        console.log("In else")
+                        customer_existance_flag=true
+                    }
+                    resolve(customer_existance_flag) 
+
+                }
+                
+            }
+            console.log(url)
+                xhttp.open("GET", url , true);
+                xhttp.send();
+                // console.log('resp',.responseText)
+                
+
+        })
+        
+    }
+    async function main(){
+        console.log("In main func")
+        var myq = await getQuote()
+        console.log("My quote is ", myq)
+    }
+    main()
+}
+    
+    
       
    var data = [
 
