@@ -13,9 +13,18 @@
   </head>
   <body>
     <h1>Electron Application</h1>
+    <label for="customer_id">customer_id</label>
+    <input type="text" name="customer_id" id="customer_id">
+    <label for="customer_name">customer_name</label>
+    <input type="text" name="customer_name" id="customer_name">
+    <label for="customer_phone">customer_phone</label>
+    <input type="text" name="" id="customer_phone">
+    <label for="customer_address">customer_address</label>
+    <input type="text" name="" id="customer_address">
+    <button id="submitdata">Submit</button>
+    <br>
+    <br>
     <button id='additem' >AddItem</button>
-
-
     <table class="table table-bordered table-responsive-md table-striped text-center">
         <thead>
           <tr>
@@ -86,10 +95,84 @@
       <p id="mypara">hyy</p>
       <script>
         var price_removed=0;
+        var customer_exists_flag;
 
-        $('tbody').on('click','tr',function(e){
-          console.log('Down')
-        })
+        //Adding customer information
+        function check_if_customer_exists(){
+
+        $('#customer_id').on('keydown',function(e){
+            console.log(e.code)
+            var customerId;
+            var customerName;
+            var customerPhone;
+            var customerAddress;
+            var total;
+            // console.log(this)
+            var url = "http://localhost:3000/customers"
+            if (e.code=="Tab" || e.code=="Enter"){
+                customerId = ($(this).val())
+                // console.log("cid",customerId)
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                // console.log(newTr)
+                var json = JSON.parse(this.responseText)[0];
+                console.log("L",json)
+                if (json==undefined){
+                  console.log("Error")
+                  customer_exists_flag = false
+                }
+                else{
+                  console.log("True")
+                  customer_exists_flag = true
+
+
+                // if(Object.keys(json).includes("customer_id") && Object.keys(json).includes("customer_name")){
+                //     console.log("True")
+                //     customer_exists_flag = true;
+                // }
+                // else{
+                //   console.log("False")
+                //   customer_exists_flag = false;
+                // }
+                // console.log('resp',this.responseText)
+                // customer_exists_flag =
+                // console.log('json',json)
+                customerName = json.customer_name
+                customerPhone = json.customer_phone
+                customerAddress = json.address
+
+                // console.log(customerName,customerPhone,customerAddress)
+
+                $('#customer_name').val(customerName)
+                $('#customer_phone').val(customerPhone)
+                $('#customer_address').val(customerAddress)
+
+                }
+
+            }
+            console.log('Flag 2',customer_exists_flag)
+             
+          }
+                console.log('Flag 3',customer_exists_flag)
+
+                url = url+'?id='+customerId
+                console.log(url)
+                xhttp.open("GET", url , true);
+                xhttp.send();
+                
+                
+        }
+        console.log("Flag 1",customer_exists_flag)
+        
+        
+          })
+
+          return customer_exists_flag
+        }
+
+        console.log("Fun log",check_if_customer_exists())
+        
 
         // $('tbody').on('click','tr',function(){
         //   // console.log($(this).hasClass('productid'))
@@ -180,8 +263,6 @@
             
             Quantity=1
             
-            
-            // alert("hyy")
         }) 
 
         
@@ -232,7 +313,6 @@
         // }
 
         // Button to remove rows from the table
-        
 
         $(document).ready(function(){
           $('tbody').on('click','.table-remove',function(){
