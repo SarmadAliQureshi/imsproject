@@ -45,9 +45,6 @@
     const getUrl = 'http://localhost:3000/customers'
     const dataPost = ({"customer_name":"rauman","customer_id":69,"customer_phone":123,"address":"Manserah"})
     console.log(typeof dataPost)
-    // $.post(getUrl,dataPost,function(data,status){
-    //     console.log(data)
-    // })
     $.ajax({
         url:'/customers',
         type:"POST",

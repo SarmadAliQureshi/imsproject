@@ -21,9 +21,11 @@
     <input type="text" name="" id="customer_phone">
     <label for="customer_address">customer_address</label>
     <input type="text" name="" id="customer_address">
-    <button id="submitdata">Submit</button>
+    
     <br>
     <br>
+    <label for="invoiceid"> <b> Invoice ID: </b></label>
+    <p id="invoiceid"></p>
     <button id='additem' >AddItem</button>
     <table class="table table-bordered table-responsive-md table-striped text-center">
         <thead>
@@ -92,15 +94,27 @@
           <td class="total-value"><div id="subtotal"></div></td>
       </tr>
       </table>
-      <p id="mypara">hyy</p>
+      <button id="submitdata" onclick="submitFormData()">Submit</button>
       <script>
+
+        function uuidv4() {
+          return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+            var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+          });
+        }
         
+        var invoice_uuid = uuidv4()
         var price_removed=0;
         var customerId;
         var customerName;
         var customerPhone;
         var customerAddress;
         var flag_after_awaitcustomercheck;
+        var today = new Date();
+        var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+        var dateTime = date+' '+time;
 
         $('#customer_id').on('keydown',function(e){
         if (e.code=="Tab" || e.code=="Enter"){  
@@ -165,6 +179,7 @@
     
   
   })
+  $('#invoiceid').text(invoice_uuid)
 
 
         //Adding customer information
@@ -288,6 +303,121 @@
         //   // else{
         //   // $('#productname').addClass('productname')}
         // })
+
+        function insertInInvoicesAllInvoices(customerId_,customerAddress_,customerName_,customerPhone_,subtotal_){
+
+          $('#table_body tr').each(function(data){
+            console.log($(this).children('tr').attr('id'))
+            console.log($(this).find('#quantity').text())
+            var rowId = $(this).children('tr').attr('id')
+            var purchased_product_id = $(this).find('#productid').text()
+            var purchased_product_name = $(this).find('#productname').text()
+            var purchased_product_price = $(this).find('#productprice').text()
+            var purchased_product_price = $(this).find('#productprice').text()
+            var purchased_product_quantity = $(this).find('#quantity').text()
+            
+            console.log(rowId,purchased_product_id,purchased_product_name,purchased_product_price,purchased_product_quantity)
+            // var currentRowData = {row1:{customer_id:customerId_,
+            //                       product_id:purchased_product_id,
+            //                       product_price:purchased_product_price,
+            //                       product_name:purchased_product_name
+            //                       }}
+            var currentRowData ={}
+            currentRowData.customer_id=customerId_
+            currentRowData.product_id=purchased_product_id
+            currentRowData.product_price=purchased_product_price
+            currentRowData.product_name=purchased_product_name
+            currentRowData.date_time=dateTime
+            currentRowData.invoice_id=invoice_uuid
+            currentRowData.product_quantity=purchased_product_quantity
+            const postallinvoicesurl = 'http://localhost:3000/allinvoices'
+            $.ajax({
+                url:postallinvoicesurl,
+                type:"POST",
+                dataType:"json",
+                data:currentRowData
+              })
+                                                
+            console.log("TABLE ROW COUNT", currentRowData)
+            
+          })
+          //Adding data to invoices table after filling allinvoices table
+          var invoicesData = {}
+          invoicesData.invoice_id=invoice_uuid
+          invoicesData.customer_id=customerId_
+          invoicesData.customer_name=customerName_
+          invoicesData.date_time=dateTime
+          invoicesData.sub_total=subtotal_
+          const postinvoicesurl = 'http://localhost:3000/invoices'
+            $.ajax({
+                url:postinvoicesurl,
+                type:"POST",
+                dataType:"json",
+                data:invoicesData
+              })
+            }
+
+
+        
+
+
+        function submitFormData(){
+          var customerId_ = $('#customer_id').val()
+          var customerAddress_ = $('#customer_address').val()
+          var customerName_ = $('#customer_name').val()
+          var customerPhone_ = $('#customer_phone').val()
+          var subtotal_ = $('.total-value').text()
+          var postData = {
+            "customer_id":customerId_,
+            "customer_name":customerName_,
+            "customer_phone":customerPhone_,
+            "address":customerAddress_
+          }
+          
+          if(flag_after_awaitcustomercheck==true){
+            // If customer found then get all the data from invoice table and fill allinvoices table of the database
+            // After filling allinvoices table fill invoice table as well
+            console.log("Customer found")
+            // console.log(customerAddress,customerId,customerName,customerPhone)
+            insertInInvoicesAllInvoices(customerId_,customerAddress_,customerName_,customerPhone_,subtotal_)
+            
+          }
+          else{ 
+            // If customer doesnot exists in the database then add data in customers table using POST request           
+            console.log("Customer not found")
+            console.log(customerAddress_,customerId_,customerName_,customerPhone_)
+            function insertCustomers(){
+              console.log("In function insertCustomers()")
+              return new Promise(function(resolve,reject){
+            const getUrl = 'http://localhost:3000/customers'
+            $.ajax({
+                url:getUrl,
+                type:"POST",
+                dataType:"json",
+                data:postData,
+                success:function(result){
+                    console.log('results', result)
+                },
+                error:function(err){
+                    console.log(err)
+                }
+            });
+            resolve("ok")
+          })
+          }
+            async function insertDataAfterCustomerRrgistered(){
+              var status_ = await insertCustomers()
+              console.log("Printing status",status_)
+              // Wait for the completion of customer insertion after that insert invoices
+              if (status_==="ok"){
+                console.log("GO AHEAD")
+                insertInInvoicesAllInvoices(customerId_,customerAddress_,customerName_,customerPhone_,subtotal_)
+              }
+
+            }
+            insertDataAfterCustomerRrgistered()
+          }
+        }
 
         var nettotal=0;
         $('tbody').on('keydown','.productid',function(e){

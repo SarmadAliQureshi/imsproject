@@ -3,6 +3,7 @@ const route_products = require('./routes/products')
 const route_customers = require('./routes/customers')
 const route_invoices = require('./routes/invoices')
 const route_allinvoices = require('./routes/allinvoices')
+const ui = require('node-uuid')
 const sqlite3 = require('sqlite3')
 const bodyParser = require('body-parser')
 const app = express();
@@ -23,6 +24,9 @@ app.get('/ejs',function(req,res){
 app.get('/test',function(req,res){
     res.sendFile(__dirname+'/testhtml.html')
 })
+console.log("MYUUID",ui())
+// import { v4 as uuidv4 } from 'uuid';
+
 //connecting to sqlite
 // let db = new sqlite3.Database('./database/main.db', function(err){
 //   if (err) {
