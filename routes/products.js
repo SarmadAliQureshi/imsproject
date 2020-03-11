@@ -2,7 +2,8 @@ const express = require('express')
 const router = express.Router();
 const sqlite3 = require('sqlite3')
 const { Sequelize } = require('sequelize')
-
+var bodyParser = require('body-parser')
+var urlencodedParser = bodyParser.urlencoded({ extended: false })
 // const sequelize = new Sequelize({
 //     dialect: 'sqlite',
 //     storage: './database/main.db'
@@ -77,7 +78,7 @@ router.get('/product',function(req,res){
 }
 })
 
-router.post('/product',function(req,res){
+router.post('/product', urlencodedParser,function(req,res){
     console.log("IN post req")
     column_names = Object.keys(req.body)
     data = Object.values(req.body)

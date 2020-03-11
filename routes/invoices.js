@@ -2,6 +2,8 @@ const express = require('express')
 const router = express.Router();
 const sqlite3 = require('sqlite3')
 const { Sequelize } = require('sequelize')
+var bodyParser = require('body-parser')
+var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 // const sequelize = new Sequelize({
 //     dialect: 'sqlite',
@@ -77,7 +79,7 @@ router.get('/invoices',function(req,res){
 }
 })
 
-router.post('/invoices',function(req,res){
+router.post('/invoices', urlencodedParser, function(req,res){
     console.log("IN post req")
     var today = new Date();
     var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
