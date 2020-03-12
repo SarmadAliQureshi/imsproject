@@ -1,4 +1,5 @@
 const express = require('express')
+var Promise = require('bluebird');
 const route_products = require('./routes/products')
 const route_customers = require('./routes/customers')
 const route_invoices = require('./routes/invoices')
@@ -6,6 +7,7 @@ const route_allinvoices = require('./routes/allinvoices')
 const ui = require('node-uuid')
 const sqlite3 = require('sqlite3')
 const bodyParser = require('body-parser')
+var templateToPdf = require('html-template-pdf')
 const app = express();
 
 app.set('view engine','ejs')
@@ -15,6 +17,7 @@ app.use(route_customers)
 app.use(route_invoices)
 app.use(route_allinvoices)
 app.use('/assets',express.static('assets'))
+app.use('/utils',express.static('utils'))
 app.get('/index',function(req,res){
     res.sendFile(__dirname+'/index.html')
 })
@@ -24,7 +27,31 @@ app.get('/ejs',function(req,res){
 app.get('/test',function(req,res){
     res.sendFile(__dirname+'/testhtml.html')
 })
+app.get('/invoice',function(req,res){
+    res.render('invoice')
+})
 console.log("MYUUID",ui())
+
+// var options = {
+//     html: "<div><p>hello der</p></div>", 
+//     fileName: 'howdycolton.pdf', 
+//     filePath: '/mypdf/' 
+//   }
+   
+//   templateToPdf(options)
+//     .then(function(resp){
+//       console.log(resp);
+//     })
+//     .catch(function(err){
+//       console.log("ERROR:",err);
+//     });
+
+
+
+
+
+
+
 // import { v4 as uuidv4 } from 'uuid';
 
 //connecting to sqlite

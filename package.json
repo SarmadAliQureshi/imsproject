@@ -2,7 +2,7 @@
   "name": "imsproject",
   "version": "1.0.0",
   "description": "Invoice management system",
-  "main": "main.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron ."
@@ -14,10 +14,15 @@
   },
   "dependencies": {
     "babel": "^6.23.0",
+    "bluebird": "^3.7.2",
     "body-parser": "^1.19.0",
     "bootstrap": "^4.4.1",
     "ejs": "^3.0.1",
     "express": "^4.17.1",
+    "html-pdf": "^2.2.0",
+    "html-template-pdf": "^1.0.3",
+    "materialize-css": "^1.0.0-rc.2",
+    "moment": "^2.24.0",
     "node-uuid": "^1.4.8",
     "nodemon": "^1.18.7",
     "sequelize": "^5.21.5",

@@ -11,14 +11,29 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
   
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
-
+<script src="https://unpkg.com/jspdf@latest/dist/jspdf.min.js"></script>
     <title>Document</title>
 </head>
 <body>
+    
+    <form id="form1">
+        <div id="dvContainer">
+            This content needs to be printed.
+        </div>
+        <input type="button" value="Print Div Contents" id="btnPrint" />
+        </form>
+    <!-- <script>
+        var doc = new jsPDF()
+
+        doc.text('Hello world!', 10, 10)
+        doc.save('./data/a4.pdf')
+        console.log('Hello world!')
+    </script> -->
+    
     <button onclick="onclickfunc()">ckic</button>
     <h1>I will show this test html</h1>
-    <table id="example" class="display" style="width:100%">
-        <!-- <thead>
+    <table id="example1" class="display" style="width:100%">
+        <thead>
             <tr>
                 <th>Name</th>
                 <th>Position</th>
@@ -37,7 +52,7 @@
                 <th>Start date</th>
                 <th>Salary</th>
             </tr>
-        </tfoot> -->
+        </tfoot>
     </table>
 
     <script>
@@ -152,5 +167,22 @@
     } );
 } );
     </script>
+
+<script type="text/javascript">
+    $("#btnPrint").on("click", function () {
+        var divContents = $("#dvContainer").html();
+        // var table_ = $('#example1').outerHTML();
+        var divToPrint=document.getElementById("example1")
+        var printWindow = window.open('', '', 'height=400,width=800');
+        printWindow.document.write('<html><head><title>DIV Contents</title>');
+        printWindow.document.write('</head><body >');
+        printWindow.document.write(divContents);
+        printWindow.document.write(divToPrint.outerHTML);
+        printWindow.document.write('</body></html>');
+        printWindow.document.close();
+        printWindow.print();
+        console.log("PRINTED")
+    });
+</script>
 </body>
 </html>

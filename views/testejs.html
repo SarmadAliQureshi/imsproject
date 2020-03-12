@@ -6,10 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
+    <script>
+        const { foo } = require('../main.js')
+      const { ipcRenderer } = require('electron')
+      ipcRenderer.on('call-foo', (event, arg) => {
+        foo(arg)
+      })
+    </script>
+
     <!--Invoice table cdn-->
     <link rel='stylesheet' type='text/css' href='assets/style.css' />
     <link rel='stylesheet' type='text/css' href='assets/print.css' media="print" />
     <!-- <script type='text/javascript' src='js/jquery-1.3.2.min.js'></script> -->
+    <script type='text/javascript' src='js/example.js'></script>
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -23,7 +32,7 @@
 
     <title>Hello, world! hye</title>
   </head>
-  <body id="fullbody">
+  <body>
     
     <h1 class="header">Electron Application</h1>
 
@@ -76,7 +85,7 @@
     <br>
     <br>
     <div class="col s12 m6" style="padding-right: 2rem;">
-      <h6 class="header" style="font-weight: bolder;">Invoice No #</h5>
+      <h6 class="header" style="font-weight: bolder;">Invoice ID :</h5>
     </div>
   <div class="col s12 m6">
     <p id="invoiceid"></p>
@@ -89,7 +98,7 @@
     <div class="row"></div>
     <br>
     <!-- <button id='additem'>AddItem</button> -->
-    <table class="table table-bordered table-responsive-md table-striped text-center" id='mytable'>
+    <table class="table table-bordered table-responsive-md table-striped text-center">
         <thead>
           <tr>
             <th class="text-center">Quantity</th>
@@ -116,7 +125,7 @@
                     aria-hidden="true"></i></a></span>
             </td> -->
             <td>
-              <span class="table-remove"><button type="button"
+              <span class="table-remove" ><button type="button" 
                   class="btn btn-danger btn-rounded btn-sm my-0">Remove</button></span>
             </td>
             </tr>
@@ -159,32 +168,8 @@
       <button class="btn waves-effect waves-light" type="submit" id="submitdata" onclick="submitFormData()">Submit
         <i class="material-icons right"></i>
       </button>
-      <button class="btn waves-effect waves-light" type="submit" id="printinvoice" onclick="printInvoice()">Print Invoice
-        <i class="material-icons right"></i>
-      </button>
+      <!-- <button id="submitdata" onclick="submitFormData()">Submit</button> -->
       <script>
-
-        function printInvoice(){
-          var divToPrint=document.getElementById("fullbody");
-          var tbody=document.getElementById("table_body");
-          var mytable=document.getElementById("mytable");
-          
-          // newWin= window.open("");
-          // newWin.document.write(divToPrint.outerHTML);
-          // newWin.print();
-          // newWin.close();
-          // var divContents = $("#dvContainer").html();
-          // var table_ = $('#example1').outerHTML();
-          var divToPrint=document.getElementById("fullbody")
-          var printWindow = window.open('', '', 'height=400,width=800');
-          // printWindow.document.write(table_body.outerHTML);
-          printWindow.document.write(divToPrint.outerHTML);
-          printWindow.document.write(mytable.outerHTML);
-
-          printWindow.document.close();
-          printWindow.print();
-          console.log("PRINTED")
-        }
 
         
 
@@ -526,7 +511,6 @@
           if (status==='submitted'){
           console.log("SUBMITTED STATUS",status)
           alert("Data Submitted")
-          printInvoice()
           // generateInvoice()
           }
         }
