@@ -19,7 +19,7 @@
     "bootstrap": "^4.4.1",
     "ejs": "^3.0.1",
     "express": "^4.17.1",
-    "html-pdf": "^2.2.0",
+    "html-pdf": "^3.0.1",
     "html-template-pdf": "^1.0.3",
     "materialize-css": "^1.0.0-rc.2",
     "moment": "^2.24.0",
